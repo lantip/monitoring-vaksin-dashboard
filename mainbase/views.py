@@ -15,8 +15,10 @@ def index(request):
         progres = Progress.objects.filter(tanggal=single_date.strftime('%Y-%m-%d'))
         if progres.count() > 0:
             progres = progres.latest('id')
-            rcd = json.loads(progres.data)
+            rcd = {}
             rcd['date'] = progres.tanggal
+            for k,v in json.loads(progres.data).items():
+                rcd[k] = v            
             data.append(rcd)
 
     prog = Progress.objects.all()
