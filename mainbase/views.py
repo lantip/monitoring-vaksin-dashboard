@@ -10,12 +10,14 @@ import json
 
 def index(request):
     starter   = timezone.now() - timedelta(days=30)
-    data = {}
+    data = []
     for single_date in (starter + timedelta(n) for n in range(31)):
         progres = Progress.objects.filter(tanggal=single_date.strftime('%Y-%m-%d'))
         if progres.count() > 0:
             progres = progres.latest('id')
-            data[progres.tanggal] = json.loads(progres.data)
+            rcd = json.loads(progres.data)
+            rcd['date'] = progres.tanggal
+            data.append(rcd)
 
     prog = Progress.objects.all()
     if prog.count() > 0:
