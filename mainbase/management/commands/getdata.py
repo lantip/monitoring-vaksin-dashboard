@@ -11,47 +11,47 @@ class Command(BaseCommand):
         ts = TS()
         urls = settings.KEMKES['daily']
         result = {
-            "total_sasaran_vaksinasi": 40349049,
-            "sasaran_vaksinasi_sdmk": 1468764,
-            "sasaran_vaksinasi_petugas_publik": 17327167,
-            "sasaran_vaksinasi_lansia": 21553118,
-            "vaksinasi1": 12015912,
-            "vaksinasi2": 7214534,
+            "total_sasaran_vaksinasi": 0,
+            "sasaran_vaksinasi_sdmk": 0,
+            "sasaran_vaksinasi_petugas_publik": 0,
+            "sasaran_vaksinasi_lansia": 0,
+            "vaksinasi1": 0,
+            "vaksinasi2": 0,
             "tahapan_vaksinasi": {
                 "sdm_kesehatan": {
-                    "total_vaksinasi1": 1488135,
-                    "total_vaksinasi2": 1348327,
-                    "sudah_vaksin1": 1488135,
-                    "sudah_vaksin2": 1348327,
+                    "total_vaksinasi1": 0,
+                    "total_vaksinasi2": 0,
+                    "sudah_vaksin1": 0,
+                    "sudah_vaksin2": 0,
                     "tertunda_vaksin1": 0,
                     "tertunda_vaksin2": 0
                 },
                 "petugas_publik": {
-                    "total_vaksinasi1": 8076455,
-                    "total_vaksinasi2": 4475281,
-                    "sudah_vaksin1": 8076455,
-                    "sudah_vaksin2": 4475281,
+                    "total_vaksinasi1": 0,
+                    "total_vaksinasi2": 0,
+                    "sudah_vaksin1": 0,
+                    "sudah_vaksin2": 0,
                     "tertunda_vaksin1": 0,
                     "tertunda_vaksin2": 0
                 },
                 "lansia": {
-                    "total_vaksinasi1": 2450582,
-                    "total_vaksinasi2": 1390926,
-                    "sudah_vaksin1": 2450582,
-                    "sudah_vaksin2": 1390926,
+                    "total_vaksinasi1": 0,
+                    "total_vaksinasi2": 0,
+                    "sudah_vaksin1": 0,
+                    "sudah_vaksin2": 0,
                     "tertunda_vaksin1": 0,
                     "tertunda_vaksin2": 0
                 }
             },
             "cakupan": {
-                "vaksinasi1": "29.78%",
-                "vaksinasi2": "17.88%",
-                "sdm_kesehatan_vaksinasi1": "101.32%",
-                "sdm_kesehatan_vaksinasi2": "91.80%",
-                "petugas_publik_vaksinasi1": "46.61%",
-                "petugas_publik_vaksinasi2": "25.83%",
-                "lansia_vaksinasi1": "11.37%",
-                "lansia_vaksinasi2": "6.45%"
+                "vaksinasi1": "",
+                "vaksinasi2": "",
+                "sdm_kesehatan_vaksinasi1": "",
+                "sdm_kesehatan_vaksinasi2": "",
+                "petugas_publik_vaksinasi1": "",
+                "petugas_publik_vaksinasi2": "",
+                "lansia_vaksinasi1": "",
+                "lansia_vaksinasi2": ""
             }
         }
         for key, url in urls.items():
@@ -111,17 +111,21 @@ class Command(BaseCommand):
                 result['cakupan']['petugas_publik_vaksinasi2'] = ts.dataSegments['0']['dataColumns'][2]['dataValues'][-1]
         date = timezone.now().strftime('%Y-%m-%d')
         progres = Progress.objects.filter(tanggal=date)
-        if progres.count() > 0:
-            progres = progres.latest('id')
-            selisih = timezone.now() - progres.created_at
-            if (selisih.total_seconds()/3600) > 1:
+        if result['total_sasaran_vaksinasi'] > 0:
+
+            if progres.count() > 0:
+                progres = progres.latest('id')
+                selisih = timezone.now() - progres.created_at
+                if (selisih.total_seconds()/3600) > 1:
+                    print('saving update')
+                    progres = Progress()
+                    progres.tanggal = date 
+                    progres.data = json.dumps(result)
+                    progres.save()
+            else:
+                print('saving data')
                 progres = Progress()
                 progres.tanggal = date 
                 progres.data = json.dumps(result)
                 progres.save()
-        else:
-            progres = Progress()
-            progres.tanggal = date 
-            progres.data = json.dumps(result)
-            progres.save()
 
