@@ -109,13 +109,13 @@ class Command(BaseCommand):
                 result['tahapan_vaksinasi']['petugas_publik']['sudah_vaksin2'] = ts.dataSegments['0']['dataColumns'][0]['dataValues'][1]
                 result['cakupan']['petugas_publik_vaksinasi1'] = ts.dataSegments['0']['dataColumns'][2]['dataValues'][-3]
                 result['cakupan']['petugas_publik_vaksinasi2'] = ts.dataSegments['0']['dataColumns'][2]['dataValues'][-1]
-        date = timezone.now().strftime('%Y-%m-%d')
+        date = datetime.now().strftime('%Y-%m-%d')
         progres = Progress.objects.filter(tanggal=date)
         if result['total_sasaran_vaksinasi'] > 0:
 
             if progres.count() > 0:
                 progres = progres.latest('id')
-                selisih = timezone.now() - progres.created_at
+                selisih = datetime.now() - progres.created_at.replace(tzinfo=None)
                 if (selisih.total_seconds()/3600) > 1:
                     print('saving update')
                     progres = Progress()
