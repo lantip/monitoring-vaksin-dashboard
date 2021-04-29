@@ -121,11 +121,13 @@ class Command(BaseCommand):
                     progres = Progress()
                     progres.tanggal = date 
                     progres.data = json.dumps(result)
+                    progres.created_at = datetime.now()
                     progres.save()
             else:
                 print('saving data')
                 progres = Progress()
                 progres.tanggal = date 
                 progres.data = json.dumps(result)
+                progres.created_at = datetime.now()
                 progres.save()
 
