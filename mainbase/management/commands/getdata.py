@@ -93,7 +93,7 @@ class Command(BaseCommand):
                 result['tahapan_vaksinasi']['lansia']['sudah_vaksin1'] = ts.dataSegments['0']['dataColumns'][0]['dataValues'][0]
                 result['tahapan_vaksinasi']['lansia']['sudah_vaksin2'] = ts.dataSegments['0']['dataColumns'][0]['dataValues'][1]
                 result['cakupan']['lansia_vaksinasi1'] = ts.dataSegments['0']['dataColumns'][2]['dataValues'][-3]
-                result['cakupan']['lansia_vaksinasi1'] = ts.dataSegments['0']['dataColumns'][2]['dataValues'][-1]
+                result['cakupan']['lansia_vaksinasi2'] = ts.dataSegments['0']['dataColumns'][2]['dataValues'][-1]
             elif key == 'pelayan_publik':
                 sasaran = None
                 for key, com in ts.info['worldUpdate']['applicationPresModel']['workbookPresModel']['dashboardPresModel']['zones'].items():

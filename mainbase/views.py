@@ -25,7 +25,7 @@ def index(request):
     if prog.count() > 0:
         tme = prog.latest('id').created_at
     else:
-        tme = timezone.now()    
+        tme = datetime.now()    
     return JsonResponse({
             'last_updated': tme.isoformat(),
             'monitoring': data
