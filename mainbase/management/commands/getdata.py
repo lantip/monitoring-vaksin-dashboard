@@ -15,6 +15,8 @@ class Command(BaseCommand):
             "sasaran_vaksinasi_sdmk": 0,
             "sasaran_vaksinasi_petugas_publik": 0,
             "sasaran_vaksinasi_lansia": 0,
+            "sasaran_vaksinasi_masyarakat_umum": 0,
+            "sasaran_vaksinasi_kelompok_1217": 0,
             "vaksinasi1": 0,
             "vaksinasi2": 0,
             "tahapan_vaksinasi": {
@@ -152,7 +154,7 @@ class Command(BaseCommand):
                     except:
                         pass
                 if sasaran:
-                    result['sasaran_vaksinasi_masyarakat_umum'] = sasaran                
+                    result['sasaran_vaksinasi_kelompok_1217'] = sasaran                
                 result['tahapan_vaksinasi']['kelompok_usia_12_17']['total_vaksinasi1'] = ts.dataSegments['0']['dataColumns'][0]['dataValues'][0]
                 result['tahapan_vaksinasi']['kelompok_usia_12_17']['total_vaksinasi2'] = ts.dataSegments['0']['dataColumns'][0]['dataValues'][1]
                 result['tahapan_vaksinasi']['kelompok_usia_12_17']['sudah_vaksin1'] = ts.dataSegments['0']['dataColumns'][0]['dataValues'][0]
