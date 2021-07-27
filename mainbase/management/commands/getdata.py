@@ -109,6 +109,36 @@ class Command(BaseCommand):
                 result['tahapan_vaksinasi']['petugas_publik']['sudah_vaksin2'] = ts.dataSegments['0']['dataColumns'][0]['dataValues'][1]
                 result['cakupan']['petugas_publik_vaksinasi1'] = ts.dataSegments['0']['dataColumns'][2]['dataValues'][-3]
                 result['cakupan']['petugas_publik_vaksinasi2'] = ts.dataSegments['0']['dataColumns'][2]['dataValues'][-1]
+            elif key == "masyarakat_umum":
+                sasaran = None
+                for key, com in ts.info['worldUpdate']['applicationPresModel']['workbookPresModel']['dashboardPresModel']['zones'].items():
+                    try:
+                        sasaran = int(com['zoneCommon']['name'].replace('.',''))
+                    except:
+                        pass
+                if sasaran:
+                    result['sasaran_vaksinasi_masyarakat_umum'] = sasaran                
+                result['tahapan_vaksinasi']['masyarakat_umum']['total_vaksinasi1'] = ts.dataSegments['0']['dataColumns'][0]['dataValues'][0]
+                result['tahapan_vaksinasi']['masyarakat_umum']['total_vaksinasi2'] = ts.dataSegments['0']['dataColumns'][0]['dataValues'][1]
+                result['tahapan_vaksinasi']['masyarakat_umum']['sudah_vaksin1'] = ts.dataSegments['0']['dataColumns'][0]['dataValues'][0]
+                result['tahapan_vaksinasi']['masyarakat_umum']['sudah_vaksin2'] = ts.dataSegments['0']['dataColumns'][0]['dataValues'][1]
+                result['cakupan']['masyarakat_umum_vaksinasi1'] = ts.dataSegments['0']['dataColumns'][2]['dataValues'][-3]
+                result['cakupan']['masyarakat_umum_vaksinasi2'] = ts.dataSegments['0']['dataColumns'][2]['dataValues'][-1]
+            elif key == "kelompok_1217":
+                sasaran = None
+                for key, com in ts.info['worldUpdate']['applicationPresModel']['workbookPresModel']['dashboardPresModel']['zones'].items():
+                    try:
+                        sasaran = int(com['zoneCommon']['name'].replace('.',''))
+                    except:
+                        pass
+                if sasaran:
+                    result['sasaran_vaksinasi_masyarakat_umum'] = sasaran                
+                result['tahapan_vaksinasi']['kelompok_usia_12_17']['total_vaksinasi1'] = ts.dataSegments['0']['dataColumns'][0]['dataValues'][0]
+                result['tahapan_vaksinasi']['kelompok_usia_12_17']['total_vaksinasi2'] = ts.dataSegments['0']['dataColumns'][0]['dataValues'][1]
+                result['tahapan_vaksinasi']['kelompok_usia_12_17']['sudah_vaksin1'] = ts.dataSegments['0']['dataColumns'][0]['dataValues'][0]
+                result['tahapan_vaksinasi']['kelompok_usia_12_17']['sudah_vaksin2'] = ts.dataSegments['0']['dataColumns'][0]['dataValues'][1]
+                result['cakupan']['kelompok_usia_12_17'] = ts.dataSegments['0']['dataColumns'][2]['dataValues'][-3]
+                result['cakupan']['kelompok_usia_12_17'] = ts.dataSegments['0']['dataColumns'][2]['dataValues'][-1]
         date = datetime.now().strftime('%Y-%m-%d')
         progres = Progress.objects.filter(tanggal=date)
         if result['total_sasaran_vaksinasi'] > 0:
