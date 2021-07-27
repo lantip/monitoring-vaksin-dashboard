@@ -41,6 +41,22 @@ class Command(BaseCommand):
                     "sudah_vaksin2": 0,
                     "tertunda_vaksin1": 0,
                     "tertunda_vaksin2": 0
+                },
+                "masyarakat_umum": {
+                    "total_vaksinasi1": 0,
+                    "total_vaksinasi2": 0,
+                    "sudah_vaksin1": 0,
+                    "sudah_vaksin2": 0,
+                    "tertunda_vaksin1": 0,
+                    "tertunda_vaksin2": 0
+                },
+                "kelompok_usia_12_17": {
+                    "total_vaksinasi1": 0,
+                    "total_vaksinasi2": 0,
+                    "sudah_vaksin1": 0,
+                    "sudah_vaksin2": 0,
+                    "tertunda_vaksin1": 0,
+                    "tertunda_vaksin2": 0
                 }
             },
             "cakupan": {
@@ -51,7 +67,11 @@ class Command(BaseCommand):
                 "petugas_publik_vaksinasi1": "",
                 "petugas_publik_vaksinasi2": "",
                 "lansia_vaksinasi1": "",
-                "lansia_vaksinasi2": ""
+                "lansia_vaksinasi2": "",
+                "masyarakat_umum_vaksinasi1":"",
+                "masyarakat_umum_vaksinasi2":"",
+                "kelompok_usia_12_17_vaksinasi1": "",
+                "kelompok_usia_12_17_vaksinasi2": ""
             }
         }
         for key, url in urls.items():
@@ -137,8 +157,8 @@ class Command(BaseCommand):
                 result['tahapan_vaksinasi']['kelompok_usia_12_17']['total_vaksinasi2'] = ts.dataSegments['0']['dataColumns'][0]['dataValues'][1]
                 result['tahapan_vaksinasi']['kelompok_usia_12_17']['sudah_vaksin1'] = ts.dataSegments['0']['dataColumns'][0]['dataValues'][0]
                 result['tahapan_vaksinasi']['kelompok_usia_12_17']['sudah_vaksin2'] = ts.dataSegments['0']['dataColumns'][0]['dataValues'][1]
-                result['cakupan']['kelompok_usia_12_17'] = ts.dataSegments['0']['dataColumns'][2]['dataValues'][-3]
-                result['cakupan']['kelompok_usia_12_17'] = ts.dataSegments['0']['dataColumns'][2]['dataValues'][-1]
+                result['cakupan']['kelompok_usia_12_17_vaksinasi1'] = ts.dataSegments['0']['dataColumns'][2]['dataValues'][-3]
+                result['cakupan']['kelompok_usia_12_17_vaksinasi2'] = ts.dataSegments['0']['dataColumns'][2]['dataValues'][-1]
         date = datetime.now().strftime('%Y-%m-%d')
         progres = Progress.objects.filter(tanggal=date)
         if result['total_sasaran_vaksinasi'] > 0:
